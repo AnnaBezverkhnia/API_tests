@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<table>
+    <thead>
+     <tr>
+        <th>Model</th>
+        <th>DUT IP</th>
+        <th>Password</th>
+        <th>Firmware</th>
+        <th>Additional-device</th>
+        <th id="path">Tests path</th>
+        <th>Run Button</th>
+        <th>Testrun status</th>
+        <th>Testrun result</th>
+     </tr>
+    </thead>
+    <tbody>
+        {% for intercom in intercoms %}
+     <tr>
+        <td class="model {{ intercom.id }}">
+            {{ intercom.model }}
+        </td>
+        <form action="report" method="post">
+            <td>
+                <input class="ip {{ intercom.id }}" type="text" name="ip" value= "{{ intercom.ip }}">
+            </td>
+            <td>
+                <input class="password {{ intercom.id }}" type="text" value="{{ intercom.intercom_password }}"></td>
+            <td>
+                <input class="firmware {{ intercom.id }}" type="text" value="{{ intercom.firmware }}"></td>
+            <td>
+                <input class="add-dev {{ intercom.id }}" type="text" value="{{ intercom.add_device }}"></td>
+            <td>
+                <input list="tests" class="test-path {{ intercom.id }}" type="text" value="">
+                <datalist id="tests">
+                    <option value="all">
+                    <option value="io">
+                    <option value="lpr">
+                    <option value="switch">
+                    <option value="system">
+                    <option value="call">
+                </datalist>
+            </td>
+            <td class="{{ intercom.id }}">
+                <button type="button" class="start-btn {{ intercom.id }}">Start</button>
+            </td>
+            <td>
+                <div class="status {{ intercom.id }}">
+                    <span></span>
+                </div>
+            </td>
+            <td class="{{ intercom.id }}">
+                <button class="result-btn {{ intercom.id }}">Result</button>
+            </td>
+      </form>
+      </tr>
+      {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
